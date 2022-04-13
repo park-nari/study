@@ -101,6 +101,13 @@ class GreetingController {
         val ticketA = Ticket("korea", "nari", "", 14)
 
         //Companion Object
+        // companion object 에 이름이 없을 경우
+//        val gook = Book.Companion.create()
+        val book = Book.BookFactoy.myBook
+
+        // object
+        val car1 = CarFactory.makeCar(10)
+        val car2 = CarFactory.makeCar(400)
 
         model.addAttribute("for", "forTest: studentNames is ${studentNames}")
         model.addAttribute("name", name)
@@ -124,6 +131,7 @@ class GreetingController {
 //        <!-- @링크  #텍스트(다국어) utext는 테그포함  $컨트롤러에서 전달된 값  *오브젝트 ~프래그먼트 | 연결부호 필요 없음- 문자 따옴표 안에 따옴표 attr-> 속성을 복수로 사용 사용안해도 됨-->
 //        <!-- with 지역 변수 [[문법]][()] 태그 사용가능 (utext) -->
     }
+
     // 함수
     fun helloWorld() : String{
         return "Hello World! class!"
@@ -133,12 +141,31 @@ class GreetingController {
         return a+b
     }
 }
+object CarFactory{
+    val cars = mutableListOf<Car>()
+    fun makeCar(horsePower: Int) : Car{
+        val car = Car(horsePower)
+        cars.add(car)
+        return car
+    }
+}
 
+data class Car(val horsePower : Int)
 //Companion Object
 class Book private constructor(val id: Int, val name: String){
-    companion object{
-        fun create() :Book(0, "animal")
+    companion object BookFactoy : IdProvider{
+        // property
+        val myBook = "name"
+
+        //static
+        fun create() = Book (0, myBook)
+        override fun getId() {
+            TODO("Not yet implemented")
+        }
     }
+}
+interface IdProvider{
+    fun getId()
 }
 //DataClass
 // toString, hashCode(), equls(), copy()
