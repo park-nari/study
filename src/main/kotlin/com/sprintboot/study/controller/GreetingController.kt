@@ -113,7 +113,7 @@ class GreetingController {
         model.addAttribute("name", name)
         model.addAttribute("message", helloWorld())
         model.addAttribute("add", add(1,1))
-        return "greeting"
+        return "index"
         // C S i 클래스 보기
         // 정렬 Ctrl Alt i
         // C A P make parameter
