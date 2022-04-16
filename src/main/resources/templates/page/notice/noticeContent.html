@@ -1,18 +1,15 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common/common::head(title='welcome kotlin')" />
+<head th:replace="common/common::head(title='Notice')" />
 
 <body class="d-flex flex-column h-100">
 
-  <block th:replace="common/header :: header(page='index')" />
+<block th:replace="common/header :: header" />
 
-  <block th:replace="fragments/main :: main" />
+<block th:replace="page/notice/parts/noticeMainForContent :: noticeMainForContent" />
 
-  <block th:replace="common/footer :: footer" />
-
-
-
+<block th:replace="common/footer :: footer" />
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -25,4 +22,4 @@
 -->
 </body>
 </html>
-      
+

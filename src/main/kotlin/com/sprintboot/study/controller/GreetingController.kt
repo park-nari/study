@@ -9,7 +9,7 @@ import java.util.Date
 
 @Controller
 class GreetingController {
-    @GetMapping("/greeting")
+    @GetMapping("/")
     fun greeting(
         @RequestParam(name = "name", required = false, defaultValue = "World") name: String?,
         model: Model
