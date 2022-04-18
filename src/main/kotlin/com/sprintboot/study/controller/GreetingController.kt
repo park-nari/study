@@ -1,6 +1,7 @@
 package com.sprintboot.study.controller
 
 import com.sprintboot.study.domain.User
+import com.sprintboot.study.repositories.NoticeRepository
 import com.sprintboot.study.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam
 class GreetingController {
     @Autowired
     lateinit var userRepository: UserRepository
+    @Autowired
+    lateinit var noticeRepository: NoticeRepository
 
     @GetMapping("/")
     fun greeting(
