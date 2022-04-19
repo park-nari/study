@@ -8,6 +8,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 @RequestMapping(value = ["/notice"])
@@ -16,9 +17,15 @@ class NoticeController {
     @Autowired
     private lateinit var noticeRepository: NoticeRepository
 
-    @RequestMapping(value = ["/"], method = [RequestMethod.GET])
-    fun list(model:Model): String{
+    @RequestMapping(value = ["/"], method = [RequestMethod.GET, RequestMethod.POST])
+    fun list(
+        notice: Notice?,
+        model: Model
+    ): String{
 
+        notice?.id?.let{
+            noticeRepository.save(notice)
+        }
         val noticeList:List<Notice> = noticeRepository.findAll()
         model.addAttribute("noticeList", noticeList)
 
@@ -34,7 +41,7 @@ class NoticeController {
         return "page/notice/noticeContent"
     }
 
-    @RequestMapping(value = ["/form"], method = [RequestMethod.GET])
+    @RequestMapping(value = ["/form"], method = [RequestMethod.GET, RequestMethod.POST])
     fun form(
         @PathVariable("id") id: Long?,
         model: Model
