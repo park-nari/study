@@ -5,10 +5,11 @@ import com.sprintboot.study.repositories.NoticeRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 @RequestMapping(value = ["/notice"])
@@ -17,15 +18,11 @@ class NoticeController {
     @Autowired
     private lateinit var noticeRepository: NoticeRepository
 
-    @RequestMapping(value = ["/"], method = [RequestMethod.GET, RequestMethod.POST])
+    @GetMapping(value = ["/"])
     fun list(
-        notice: Notice?,
         model: Model
     ): String{
 
-        notice?.id?.let{
-            noticeRepository.save(notice)
-        }
         val noticeList:List<Notice> = noticeRepository.findAll()
         model.addAttribute("noticeList", noticeList)
 
@@ -41,12 +38,35 @@ class NoticeController {
         return "page/notice/noticeContent"
     }
 
-    @RequestMapping(value = ["/form"], method = [RequestMethod.GET, RequestMethod.POST])
+    @GetMapping(value = ["/form/{id}"])
     fun form(
-        @PathVariable("id") id: Long?,
+        @PathVariable
+        id:Long,
         model: Model
     ): String{
 
+        var notice: Notice
+        notice = if(id != null){
+            noticeRepository.getById(id)
+        } else{
+            Notice(null, null, null)
+        }
+        model.addAttribute("notice", notice)
         return "page/notice/noticeForm"
+    }
+
+    @PostMapping(value = ["/form"])
+    fun addForm(
+        notice:Notice,
+        model: Model
+    ): String{
+
+        notice?.id?.let{
+            noticeRepository.save(notice)
+        }
+        var noticeList: List<Notice>? = noticeRepository.findAll()
+        model.addAttribute("noticeList", noticeList)
+
+        return "page/notice/"
     }
 }

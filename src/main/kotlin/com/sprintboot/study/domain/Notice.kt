@@ -9,7 +9,7 @@ import javax.persistence.Id
 data class Notice(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-    val title: String,
-    val content: String
+    val id: Long?,
+    val title: String?,
+    val content: String?
 )

@@ -6,11 +6,11 @@
     <div class="container">
         <h1 class="mt-5">Notice</h1>
 
-        <form action="#" th:action="@{/notice/}" th:method="post" >
+        <form action="#" th:action="@{/notice/}" th:method="post" th:object="${noticeList}" >
 <!--            <input type="hidden" th:text="*{id}?:'0'">-->
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">제목</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:text="*{title}">
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:field="*{title}">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">내용</label>
