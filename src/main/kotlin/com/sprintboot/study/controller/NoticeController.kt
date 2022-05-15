@@ -2,6 +2,8 @@ package com.sprintboot.study.controller
 
 import com.sprintboot.study.domain.Notice
 import com.sprintboot.study.repositories.NoticeRepository
+import com.sprintboot.study.usecase.NoticeUsecase
+import com.sprintboot.study.usecase.NoticeUsecaseImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 
 @Controller
 @RequestMapping(value = ["/notice"])
-class NoticeController {
+class NoticeController() {
 
     @Autowired
     private lateinit var noticeRepository: NoticeRepository
@@ -23,9 +25,9 @@ class NoticeController {
         model: Model
     ): String{
 
-        val noticeList:List<Notice> = noticeRepository.findAll()
-        model.addAttribute("noticeList", noticeList)
+        val noticeUsecase= NoticeUsecase(noticeRepository)
 
+        model.addAttribute("noticeList", noticeUsecase.getNoticeAll())
         return "page/notice/noticeList"
     }
 
